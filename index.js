@@ -18,4 +18,4 @@ async function getSentim() {
     console.log(result);
 }
 
-submitBtn.addEventListener("click",getSentim);
+submitBtn.addEventListener("click",getSentim)
