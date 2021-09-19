@@ -15,7 +15,8 @@ async function getSentim() {
             JSON.stringify({text: textarea.value})
     });
     const result = await response.json();
-    console.log(result);
+    if(!response.ok) throw Error(result.error);
+    resultsDiv.textContent = JSON.stringify(result)
 }
 
 submitBtn.addEventListener("click",getSentim)
