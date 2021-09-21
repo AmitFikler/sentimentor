@@ -19,6 +19,7 @@ async function getSentim() {
     if (!response.ok) {
         alert(`HTTP-Error ${response.status}`)
         resultsDiv.textContent = 'An error occurred.'
+        resultsDiv.style.color = 'black'
         getCat(response.status)
     }
     const result = await response.json();
