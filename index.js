@@ -6,7 +6,7 @@ const cat = document.getElementById("cat")
 
 
 async function getSentim() {
-    resultsDiv.innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>"
+    resultsDiv.innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>" //"loading" indicator
     const response = await fetch("https://sentim-api.herokuapp.com/api/v1/", {
         method: "POST",
         headers: {
@@ -16,29 +16,29 @@ async function getSentim() {
         body: 
             JSON.stringify({text: textarea.value})
     });
-    const result = await response.json();
-    if(!response.ok) throw Error(result.error);
-    resultsDiv.textContent = JSON.stringify(result.result)
-    for (let sentence of result.sentences) {
-        let p =  document.createElement("p")
-        p.textContent = JSON.stringify(sentence)
-        getTypeColor(sentence)
-        resultsDiv.appendChild(p)
+    if (!response.ok) {
+        alert(`HTTP-Error ${response.status}`)
+        resultsDiv.textContent = 'An error occurred.'
+        getCat(response.status)
     }
+    const result = await response.json();
+    const polarity = result.result.polarity
+    const type = result.result.type
+    resultsDiv.textContent = `polarity: ${polarity} , type: ${type}`
+    colorResult(type)
     getCat(response.status)
     
 }
 
-function getTypeColor(sentence){
-    let type  = sentence.sentiment.type
-    console.log(type)
+function colorResult(type) {
+    if (type === "positive") resultsDiv.style.color = "green"
+    else if (type === "neutral") resultsDiv.style.color = "gray"
+    else if  (type === "negative") resultsDiv.style.color = "red"
 }
 
 function getCat(status) {
-    catImg = document.createElement("img")
-    catImg.src = `https://http.cat/${status}.jpg`
-    catImg.width = 350
-    document.body.appendChild(catImg)
+    cat.src = `https://http.cat/${status}.jpg`
+    cat.width = 350
 }
 
 
