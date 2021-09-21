@@ -22,8 +22,8 @@ async function getSentim() {
         getCat(response.status)
     }
     const result = await response.json();
-    const polarity = result.result.polarity
-    const type = result.result.type
+    const polarity = result.result.polarity // get polarity.
+    const type = result.result.type // get type.
     resultsDiv.textContent = `polarity: ${polarity} , type: ${type}`
     colorResult(type)
     getCat(response.status)
@@ -32,7 +32,7 @@ async function getSentim() {
 
 function colorResult(type) {
     if (type === "positive") resultsDiv.style.color = "green"
-    else if (type === "neutral") resultsDiv.style.color = "gray"
+    else if (type === "neutral") resultsDiv.style.color = "#474747"
     else if  (type === "negative") resultsDiv.style.color = "red"
 }
 
